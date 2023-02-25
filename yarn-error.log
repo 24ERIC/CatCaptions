@@ -1,0 +1,49 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\Jason\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add expo
+
+PATH: 
+  C:\Python311\Scripts\;C:\Python311\;C:\Python310\Scripts\;C:\Python310\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files (x86)\QuickTime\QTSystem\;C:\MinGW\bin;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Users\Jason\AppData\Local\Android\Sdk\platform-tools;C:\Users\Jason\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\Jason\AppData\Roaming\local\bin;C:\Users\Jason\AppData\Local\Microsoft\WindowsApps;C:\Users\Jason\AppData\Local\atom\bin;C:\Users\Jason\AppData\Local\GitHubDesktop\bin;C:\Users\Jason\AppData\Local\Programs\Microsoft VS Code\bin;C:\MinGW\bin;C:\ghcup\bin;C:\Users\Jason\.dotnet\tools;C:\Program Files\heroku\bin;C:\Users\Jason\AppData\Roaming\npm;C:\Users\Jason\AppData\Roaming\nvm;C:\Program Files\nodejs
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  16.18.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: connect EHOSTUNREACH 104.16.16.35:443
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1278:16)
+
+npm manifest: 
+  {
+    "name": "catcaptions",
+    "version": "1.0.0",
+    "main": "node_modules/expo/AppEntry.js",
+    "scripts": {
+      "start": "expo start",
+      "android": "expo start --android",
+      "ios": "expo start --ios",
+      "web": "expo start --web"
+    },
+    "dependencies": {
+      "@react-navigation/native": "^6.1.5",
+      "@react-navigation/native-stack": "^6.9.11",
+      "expo": "^1.0.0",
+      "expo-status-bar": "~1.4.4",
+      "react": "18.2.0",
+      "react-native": "0.71.3"
+    },
+    "devDependencies": {
+      "@babel/core": "^7.20.0"
+    },
+    "private": true
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
