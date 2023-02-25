@@ -1,34 +1,19 @@
 import React from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { TextInput } from 'react-native-paper';
 
-const CustomInput = ({value, setValue, placeholder}) => {
+const CustomInput = ({ label, value, setValue, placeholder}) => {
     return (
         <View>
             <TextInput
+                mode="outlined"
+                label={label} 
                 value={value}
                 onChangeText={setValue}
                 placeholder={placeholder}
-                style={styles.input}
-            >
-            </TextInput>
+            />
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#FFFFFF',
-        width: '100%',
-        height: '7%',
-        borderWidth: 1,
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        marginVertical: 5,
-        justifyContent: 'center'
-    },
-    input: {
-        fontSize: 24
-    },
-});
 
 export default CustomInput

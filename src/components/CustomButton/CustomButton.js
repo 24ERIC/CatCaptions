@@ -1,44 +1,13 @@
 import React from 'react';
 import { Text, StyleSheet, Pressable } from 'react-native';
+import { Button } from 'react-native-paper';
 
-const CustomButton = ({ onPress, text, type = "primary", bgColor, fgColor}) => {
+const CustomButton = ({ onPress, text }) => {
     return(
-        <Pressable
-            onPress={onPress}
-            style={[
-                styles.container,
-                styles[`container_${type}`],
-                bgColor ? {backgroundColor: bgColor} : {}
-            ]}
-        >
-            <Text
-                style={[
-                    styles.text,
-                    styles[`text_${type}`],
-                    fgColor ? {color: fgColor} : {}
-                ]}
-            >
-                {text}
-            </Text>
-        </Pressable>
+        <Button onPress={onPress} mode="contained">
+            <Text>{text}</Text>
+        </Button>
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-        padding: 15,
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: '#D2735C'
-    },
-    container_primary: {
-        backgroundColor: '#372C2E',
-    },
-    text: {
-        fontWeight: 'bold',
-        color: '#FFFFFF'
-    },
-})
-
-export default CustomButton
+export default CustomButton;
