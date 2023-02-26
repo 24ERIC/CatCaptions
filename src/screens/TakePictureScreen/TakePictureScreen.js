@@ -1,65 +1,143 @@
-import React, { useState } from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import CustomButton from '../../components/CustomButton';
+import React, { useState, useEffect } from 'react';
+import { 
+    Share, 
+    View, 
+    Text, 
+    Image, 
+    Button, 
+    ActivityIndicator, 
+    FlatList 
+} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import axios from 'axios';
+import CustomButton from '../../components/CustomButton';
+import CustomInput from '../../components/CustomInput';
+import * as SMS from 'expo-sms';
 
-const TakePictureScreen = () => {
+function TakePictureScreen() {
+    // const [isAvailable, setIsAvailable] = useState(false);
 
-    const [image, setImage] = useState(null);
+    // useEffect(() => {
+    //     async function checkAvailability() {
+    //         const isSmsAvailable = await SMS.isAvailableAsync();
+    //         setIsAvailable(isSmsAvailable);
+    //     }
+    // }, []);
 
-    const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            aspect: [4,3],
-            quality: 1,
-        });
+    // const sendSms = async () => {
+    //     const {result} = await SMS.sendSMSAsync(
+    //         ['9544771488'],
+    //         'hIIIIIIIIIII'
+    //     );
+    // };
 
-        console.log(result);
+  const [file, setFile] = useState(null);
+  const [caption, setCaption] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
 
-        if(!result.canceled) {
-            setImage(result.assets[0].uri);
-        }
+  const shareImage = (caption) => {
+    console.log(`LOL!!!! ${caption}`);
+    const shareOptions = {
+        title: 'Title',
+        message: caption,
+        url: file,
+        subject: 'Subject'
+    }
+    Share.share(shareOptions);
+  }
+
+  const handleFileChange = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setFile(result.uri);
+    }
+  };
+
+  const handleImageUpload = async () => {
+    if (!file) {
+      return;
     }
 
-    // const openCamera = () => {
-    //     console.log('hello?');
-    //     let options = {
-    //         storageOptions: {
-    //             path: 'images',
-    //             mediaType: 'photo'
-    //         },
-    //         includeBase64: true,
-    //     };
+    const formData = new FormData();
+    formData.append('image', {
+      uri: file,
+      type: 'image/jpeg',
+      name: 'photo.jpg',
+    });
 
-    //     launchCamera(options, response => {
-    //         console.log('Response: ', response);
-    //         if (response.didCancel) {
-    //             console.log('User cancelled image picker');
-    //         } else if (response.error) {
-    //             console.log('ImagePicker Error: ', response.error);
-    //         } else {
-    //             const source = {uri: 'data:image/jpeg;base64,' + response.base64};
-    //         }
-    //     });
+    try {  
+        setLoading(true);
+        const response = await axios.post(
+            'http://128.122.49.69:20437/upload/image?model=GPT',
+            formData,
+            {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+            }
+        );
+        setLoading(false);
+        // setCaption(response.data.captions[0]);
+        setData(response.data.captions);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const Caption = () => {
+    // if (caption === '') {
+    //     return <Text></Text>;
     // }
-
-    return (
+        return (
         <View>
-            <CustomButton 
-            text="Choose from camera roll" 
-            onPress={pickImage}/>
-            {image && <Image source={{ uri: image}} style={{ width: 200, height: 200}}/>}
-        </View>
-    );
-};
+            {loading === true && <ActivityIndicator color = {"#000"}/>}
+            {/* <Text>{caption}</Text> */}
+            <FlatList
+                data={data}
+                renderItem={({item}) => {
+                    return (
+                        <View style={{
+                            flexDirection:"row", 
+                            alignItems:"center", 
+                            justifyContent:"center",
+                            marginBottom:10
+                            }}>
+                            <View style={{width:'70%'}}>
+                                <Text style={{fontSize:20}}>{item}</Text>
+                            </View>
+                            <View style={{width:'20%'}}>
+                                <CustomButton
+                                    text="Share"
+                                    onPress={() => {shareImage(item);}}
+                                />
+                            </View>
+                            
+                        </View>
+                    )
+                }}
+            />
+        </View>)
+  }
 
-const styles = StyleSheet.create({
-    base: {
-        flex: 1,
-        justifyContent: 'flex-end'
-    }
-})
+  return (
+    <View>
+      <CustomButton text="Choose photo" onPress={handleFileChange} />
+      {file && (
+        <>
+          <Image source={{ uri: file }} style={{ width: 200, height: 200, alignSelf:'center' }} />
+          <CustomButton text="Generate captions" onPress={handleImageUpload} />
+        </>
+      )}
+      <Caption />
+    </View>
+  );
+}
 
-export default TakePictureScreen
+export default TakePictureScreen;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View, Image } from 'react-native';
+import { CustomInput } from '../../components/CustomInput';
 
 const LoginScreen = () => {
 
@@ -12,7 +13,13 @@ const LoginScreen = () => {
 
     return (
         <View>
-            <Text>login!</Text>
+            <Text>Log in</Text>
+            <CustomInput
+            label='Username'
+            value=''
+            setValue={text => setText(text)}
+            placeholder='Enter username'
+            />
         </View>
     );
 };

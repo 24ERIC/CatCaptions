@@ -10,4 +10,20 @@ const CustomButton = ({ onPress, text }) => {
     );
 };
 
-export default CustomButton;
+const styles = StyleSheet.create({
+    container: {
+        width: '100%',
+        padding: 15,
+        borderRadius: 5,
+        borderWidth: 1,
+    },
+    container_primary: {
+        backgroundColor: '#32CD32',
+    },
+    text: {
+        fontWeight: 'bold',
+        color: '#FFFFFF'
+    },
+})
+
+export default CustomButton
