@@ -30,10 +30,9 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 5,
         borderWidth: 1,
-        borderColor: '#D2735C'
     },
     container_primary: {
-        backgroundColor: '#372C2E',
+        backgroundColor: '#32CD32',
     },
     text: {
         fontWeight: 'bold',
