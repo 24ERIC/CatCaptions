@@ -1,14 +1,51 @@
-import React, { useState } from 'react';
-import { View, Text, Image, Button, ActivityIndicator, FlatList, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { 
+    Share, 
+    View, 
+    Text, 
+    Image, 
+    Button, 
+    ActivityIndicator, 
+    FlatList 
+} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import CustomButton from '../../components/CustomButton';
+import CustomInput from '../../components/CustomInput';
+import * as SMS from 'expo-sms';
 
 function TakePictureScreen() {
+    // const [isAvailable, setIsAvailable] = useState(false);
+
+    // useEffect(() => {
+    //     async function checkAvailability() {
+    //         const isSmsAvailable = await SMS.isAvailableAsync();
+    //         setIsAvailable(isSmsAvailable);
+    //     }
+    // }, []);
+
+    // const sendSms = async () => {
+    //     const {result} = await SMS.sendSMSAsync(
+    //         ['9544771488'],
+    //         'hIIIIIIIIIII'
+    //     );
+    // };
+
   const [file, setFile] = useState(null);
   const [caption, setCaption] = useState('');
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+
+  const shareImage = (caption) => {
+    console.log(`LOL!!!! ${caption}`);
+    const shareOptions = {
+        title: 'Title',
+        message: caption,
+        url: file,
+        subject: 'Subject'
+    }
+    Share.share(shareOptions);
+  }
 
   const handleFileChange = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -53,10 +90,6 @@ function TakePictureScreen() {
       console.error(error);
     }
   };
-
-  const shareImage = (caption) => {
-    console.log(`LOL!!!! ${caption}`);
-  }
 
   const Caption = () => {
     // if (caption === '') {
